@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane prefHeight="475.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+    <tabs>
+        <Tab text="Add New Student">
+            <content>
+                <GridPane>
+                    <Label text="First Name">
+                        <GridPane.margin>
+                            <Insets left="40.0" />
+                        </GridPane.margin></Label>
+                    <Label text="Last Name" GridPane.rowIndex="1">
+                        <GridPane.margin>
+                            <Insets left="40.0" />
+                        </GridPane.margin></Label>
+                    <Label text="Student ID" GridPane.rowIndex="2">
+                        <GridPane.margin>
+                            <Insets left="40.0" />
+                        </GridPane.margin></Label>
+                    <TextField fx:id="textFieldFirstName" GridPane.columnIndex="1">
+                        <GridPane.margin>
+                            <Insets left="20.0" />
+                        </GridPane.margin></TextField>
+                    <TextField fx:id="textFieldLastName" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <GridPane.margin>
+                            <Insets left="20.0" />
+                        </GridPane.margin></TextField>
+                    <TextField fx:id="textFieldStudentId" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <GridPane.margin>
+                            <Insets left="20.0" />
+                        </GridPane.margin></TextField>
+                    <Button onAction="#addStudent" text="Add New Student" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <columnConstraints>
+                        <ColumnConstraints />
+                        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                    </rowConstraints>
+                    <padding>
+                        <Insets left="30.0" top="30.0" />
+                    </padding>
+                </GridPane>
+            </content>
+        </Tab>
+        <Tab text="List of Students">
+            <content>
+                <TableView fx:id="tableStudents">
+                    <columns>
+                        <TableColumn prefWidth="75.0" text="First Name" fx:id="tableColumnFirstName"/>
+                        <TableColumn prefWidth="75.0" text="Last Name" fx:id="tableColumnLastName"/>
+                        <TableColumn prefWidth="75.0" text="Student ID" fx:id="tableColumnStudentId" />
+                    </columns></TableView>
+            </content>
+        </Tab>
+        <Tab text="Add Student to Course">
+            <content>
+                <BorderPane>
+                    <top>
+                        <FlowPane>
+                            <Label text="Choose Student:"></Label>
+                            <ComboBox fx:id="comboboxStudents"></ComboBox>
+                            <Label text="Choose Course:"></Label>
+                            <ComboBox fx:id="comboBoxCourses"></ComboBox>
+                            <Button onAction="#AddStrudentToCourse" text="Add Student!"></Button>
+                        </FlowPane>
+                    </top>
+                </BorderPane>
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>
