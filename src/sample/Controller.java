@@ -6,96 +6,129 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Controller {
 
     public TableView tableStudents;
-    public TableColumn tableColumnFirstName;
-    public TableColumn tableColumnLastName;
-    public TableColumn tableColumnStudentId;
+    public TableColumn<Student, String> tableColumnFirstName;
+    public TableColumn<Student, String> tableColumnLastName;
+    public TableColumn<Student, String> tableColumnStudentId;
+    public TableColumn<Student, String> tableColumnEmail;
+    public TableColumn<Student, String> tableColumnPhone;
+    public TableColumn<Student, String> tableColumnCity;
     public ComboBox comboboxStudents;
-    public ComboBox comboBoxCourses;
-    public TextField textFieldPhone;
-    public Button buttonAddNewStudent;
+    public ComboBox<Course> comboBoxCourses;
+    public TextField textFieldFirstName;
+    public TextField textFieldLastName;
     public TextField textFieldEmail;
+    public TextField textFieldPhone;
     public TextField textFieldCity;
+    public TextField DataSearch;
     public ComboBox comboBoxList;
     public ComboBox comboboxStudentsToCourse;
-    public Button buttonStudentToCourse;
     public ComboBox comboboxGradeToStudents;
     public ComboBox comboBoxGrades;
-    public Button buttonAddGradeToStudent;
-    public TextField DataSearch;
     public Button buttonSearchQuery;
-    public TableColumn tableColumnEmail;
-    public TableColumn tableColumnPhone;
-    public TableColumn tableColumnCity;
+    public Button buttonAddNewStudent;
+    public Button buttonStudentToCourse;
+    public Button buttonAddGradeToStudent;
 
     private QueryWriter queryWriter = new QueryWriter();
 
-    ObservableList<Student> students = FXCollections.observableArrayList();
-    ObservableList<Course> courses = FXCollections.observableArrayList();
-
-    public TextField textFieldFirstName;
-    public TextField textFieldLastName;
-
-    int studentId = 10000;
 
 
-    public void addStudent(ActionEvent actionEvent) {
-        Student student = new Student(studentId, textFieldFirstName.getText(), textFieldLastName.getText(), textFieldEmail.getText(), textFieldPhone.getText(), textFieldCity.getText());
-        studentId += 27;
-        students.add(student);
+    private static Connection conn;
+    private static Statement stmt;
+
+    // will be executed when GUI is ready
+    private ObservableList<Student> studentList;
+    public void initialize() throws SQLException, ClassNotFoundException {
+        studentList = FXCollections.observableArrayList();
+
+        tableColumnStudentId.setCellValueFactory(
+                new PropertyValueFactory<Student, String>("IDDB")
+        );
+        tableColumnFirstName.setCellValueFactory(
+                new PropertyValueFactory<Student, String>("firstNameDB")
+        );
+        tableColumnLastName.setCellValueFactory(
+                new PropertyValueFactory<Student, String>("lastNameDB")
+        );
+        tableColumnEmail.setCellValueFactory(
+                new PropertyValueFactory<Student, String>("emailDB")
+        );
+        tableColumnPhone.setCellValueFactory(
+                new PropertyValueFactory<Student, String>("phoneNoDB")
+        );
+        tableColumnCity.setCellValueFactory(
+                new PropertyValueFactory<Student, String>("cityDB")
+        );
+        String url = "jdbc:sqlite:C:\\Users\\JesperBlom\\Desktop\\Project.db";
+        Connection conn = null;
         try {
-            queryWriter.Connect("jdbc:sqlite:/Users/magnus/Desktop/student.DB");
+            conn = DriverManager.getConnection(url);
+            ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM STUDENTS");
+            while (rs.next()) {
+                Student student = new Student();
+                student.setIDDB(rs.getInt("ID"));
+                student.setFirstNameDB(rs.getString("FIRST_NAME"));
+                student.setLastNameDB(rs.getString("LAST_NAME"));
+                student.setEmailDB(rs.getString("EMAIL"));
+                student.setPhoneNoDB(rs.getString("PHONE"));
+                student.setCityDB(rs.getString("CITY"));
+                studentList.add(student);
+            }
+            tableStudents.setItems(studentList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    public void updateTableViews(ObservableList listToUpdate) throws SQLException {
+        studentList.clear();
+        String url = "jdbc:sqlite:C:\\Users\\JesperBlom\\Desktop\\Project.db";
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+            ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM STUDENTS");
+            while (rs.next()) {
+                Student student = new Student();
+                student.setIDDB(rs.getInt("ID"));
+                student.setFirstNameDB(rs.getString("FIRST_NAME"));
+                student.setLastNameDB(rs.getString("LAST_NAME"));
+                student.setEmailDB(rs.getString("EMAIL"));
+                student.setPhoneNoDB(rs.getString("PHONE"));
+                student.setCityDB(rs.getString("CITY"));
+                studentList.add(student);
+            }
+            tableStudents.setItems(studentList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    };
+
+
+    public void preparedStatementExecute(Student student) throws SQLException {
+        String url = "jdbc:sqlite:C:\\Users\\JesperBlom\\Desktop\\Project.db";
+        try {
+            queryWriter.Connect(url);
             queryWriter.createStatement();
             queryWriter.PreparedStatementInsertStudent(student);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        System.out.println(students);
+        updateTableViews(studentList);
     }
 
-    // will be executed when GUI is ready
-    public void initialize()
-    {
-        tableStudents.setItems(students);
-
-        tableColumnStudentId.setCellValueFactory(
-                new PropertyValueFactory<Student, String>("ID")
-        );
-        tableColumnFirstName.setCellValueFactory(
-                new PropertyValueFactory<Student, String>("firstName")
-        );
-        tableColumnLastName.setCellValueFactory(
-                new PropertyValueFactory<Student, String>("lastName")
-        );
-        tableColumnEmail.setCellValueFactory(
-                new PropertyValueFactory<Student, String>("email")
-        );
-        tableColumnPhone.setCellValueFactory(
-            new PropertyValueFactory<Student, String>("phoneNo")
-        );
-        tableColumnCity.setCellValueFactory(
-                new PropertyValueFactory<Student, String>("city")
-        );
-
-
-        comboboxStudentsToCourse.setItems(students);
-        comboBoxCourses.setItems(courses);
-        Teacher line = new Teacher(1,"Line", "Reinhardt");
-        Teacher ebbe = new Teacher(2,"Ebbe", "Vang");
-
-        courses.addAll(new Course(1, line,"SD","E2019" ), new Course(2, line,"SD","F2020"), new Course(3,ebbe,"ES1","F2020"));
+    public void addStudent(ActionEvent actionEvent) throws SQLException {
+        Student student = new Student(textFieldFirstName.getText(), textFieldLastName.getText(), textFieldEmail.getText(),textFieldPhone.getText(),textFieldCity.getText());
+        preparedStatementExecute(student);
     }
-
-    public void AddStudentToCourse(ActionEvent actionEvent) {
-
-
+    public void AddStudentToCourse(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         System.out.println(comboBoxCourses.getSelectionModel().getSelectedItem());
         System.out.println(comboboxStudents.getSelectionModel().getSelectedItem());
     }

@@ -5,7 +5,7 @@ import java.sql.*;
 public class QueryWriter {
     Connection conn = null;
     Statement stmt;
-    private Student student;
+
 
     public void createStatement() throws SQLException {
         stmt = conn.createStatement();
@@ -20,16 +20,11 @@ public class QueryWriter {
     }
 
     public ResultSet SearchQueryStatement(String queryStatement) throws SQLException {
-        ResultSet rs = stmt.executeQuery(queryStatement);
-        //
-        if (rs == null) System.out.println("No records retrieved");
-        while (rs != null && rs.next()) {
-            String name = rs.getString(1);
-            int tracks = rs.getInt(2);
-            System.out.println(name + " " + tracks);
+        ResultSet rs = conn.createStatement().executeQuery(queryStatement);
+       return rs;
+
         }
-        return rs;
-    }
+
 
     public ResultSet InputStatement() throws SQLException {
 
@@ -48,26 +43,26 @@ public class QueryWriter {
         return rs;
     }
 
-    public PreparedStatement PreparedStatementInsertStudent(Student student) throws SQLException {
+    public void PreparedStatementInsertStudent(Student student) throws SQLException {
+        PreparedStatement pInputStatement = conn.prepareStatement("INSERT INTO STUDENTS(ID,FIRST_NAME,LAST_NAME,EMAIL,PHONE,CITY) VALUES(null,'"
+                +student.getFirstName()+"', '"
+                +student.getLastName()+"', '"
+                +student.getEmail()+"', '"
+                +student.getPhoneNo()+"', '"
+                +student.getCity()+"');");
+
+        pInputStatement.executeUpdate();
 
 
-        String pInputStatement = "INSERT INTO STUDENTS(ID,FIRST_NAME,LAST_NAME,EMAIL,PHONE,CITY) VALUES("+student.getID()+", "
-                +student.getFirstName()+", "
-                +student.getLastName()+", "
-                +student.getEmail()+", "
-                +student.getPhoneNo()+", "
-                +student.getCity()+");";
+    }
+    public void PreparedStatementAddStudentToCourse(Student student) throws SQLException {
+
+
+    PreparedStatement pInputStatement = conn.prepareStatement("INSERT INTO GRADES(ID,STUDENT_ID,COURSE_ID,TEACHER_ID,GRADE) VALUES (20000, 10001,123,123,123);");
         System.out.println(pInputStatement);
-        PreparedStatement pstmt = conn.prepareStatement(pInputStatement);
 
-            pstmt.setInt(1, student.getID());
-            pstmt.setString(2, student.getFirstName());
-            pstmt.setString(3, student.getLastName());
-            pstmt.setString(4, student.getEmail());
-            pstmt.setString(5, student.getPhoneNo());
-            pstmt.setString(6, student.getCity());
+        pInputStatement.executeUpdate();
 
 
-     return pstmt;
     }
 }
