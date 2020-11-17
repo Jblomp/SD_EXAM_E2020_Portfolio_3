@@ -1,51 +1,75 @@
 package sample;
 
 public class Student {
-    private String firstname;
-    private String lastname;
-    private String studentID;
+    private int ID;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phoneNo;
+    private String city;
 
-    public Student(String firstname, String lastname, String studentID) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.studentID = studentID;
+
+    public Student(int ID, String firstName, String lastName, String email, String phoneNo, String city) {
+        this.ID = ID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNo = phoneNo;
+        this.city = city;
+
     }
 
-    public String getFirstname() {
-        return firstname;
+    public int getID() {
+        return ID;
     }
 
-    public void setFirstname(String firstname) {
-        if (firstname.length()< 20 && firstname.length() > 1)
-            this.firstname = firstname;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getStudentID() {
-        return studentID;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setStudentID(String studentID) {
-        this.studentID = studentID;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String info() {
-        return "Student{" +
-                "firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", studentID='" + studentID + '\'' +
-                '}';
+    public String getEmail() {
+        return email;
     }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
 
     @Override
     public String toString() {
-        return firstname + " " + lastname;
+        return firstName + " " + lastName;
     }
 }

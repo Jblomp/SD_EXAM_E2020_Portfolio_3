@@ -5,11 +5,32 @@ import javafx.collections.ObservableList;
 
 public class Course {
 
+    private int ID;
+    private Teacher teacher;
     private String name;
-    private ObservableList<Student> enrolledStudents = FXCollections.observableArrayList();
+    private String timeOfYear;
 
-    public Course(String name) {
+    public Course(int ID, Teacher teacher, String name, String timeOfYear) {
+        this.ID = ID;
+        this.teacher = teacher;
         this.name = name;
+        this.timeOfYear = timeOfYear;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     public String getName() {
@@ -20,17 +41,13 @@ public class Course {
         this.name = name;
     }
 
-    public ObservableList<Student> getEnrolledStudents() {
-        return enrolledStudents;
+    public String getTimeOfYear() {
+        return timeOfYear;
     }
 
-    public boolean enrollStudent(Student student)
-    {
-        return enrolledStudents.add(student);
+    public void setTimeOfYear(String timeOfYear) {
+        this.timeOfYear = timeOfYear;
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
+    //private ObservableList<Student> enrolledStudents = FXCollections.observableArrayList();
 }

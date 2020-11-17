@@ -3,10 +3,7 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class Controller {
@@ -17,16 +14,34 @@ public class Controller {
     public TableColumn tableColumnStudentId;
     public ComboBox comboboxStudents;
     public ComboBox comboBoxCourses;
+    public TextField textFieldPhone;
+    public Button buttonAddNewStudent;
+    public TextField textFieldEmail;
+    public TextField textFieldCity;
+    public ComboBox comboBoxList;
+    public ComboBox comboboxStudentsToCourse;
+    public Button buttonStudentToCourse;
+    public ComboBox comboboxGradeToStudents;
+    public ComboBox comboBoxGrades;
+    public Button buttonAddGradeToStudent;
+    public TextField DataSearch;
+    public Button buttonSearchQuery;
+    public TableColumn tableColumnEmail;
+    public TableColumn tableColumnPhone;
+    public TableColumn tableColumnCity;
 
     ObservableList<Student> students = FXCollections.observableArrayList();
     ObservableList<Course> courses = FXCollections.observableArrayList();
 
     public TextField textFieldFirstName;
     public TextField textFieldLastName;
-    public TextField textFieldStudentId;
+
+    int studentId = 10000;
+
 
     public void addStudent(ActionEvent actionEvent) {
-        Student student = new Student(textFieldFirstName.getText(), textFieldLastName.getText(), textFieldStudentId.getText());
+        Student student = new Student(studentId, textFieldFirstName.getText(), textFieldLastName.getText(), textFieldEmail.getText(), textFieldPhone.getText(), textFieldCity.getText());
+        studentId += 27;
         students.add(student);
 
         System.out.println(students);
@@ -37,24 +52,43 @@ public class Controller {
     {
         tableStudents.setItems(students);
 
+        tableColumnStudentId.setCellValueFactory(
+                new PropertyValueFactory<Student, String>("ID")
+        );
         tableColumnFirstName.setCellValueFactory(
-                new PropertyValueFactory<Student, String>("firstname")
+                new PropertyValueFactory<Student, String>("firstName")
         );
         tableColumnLastName.setCellValueFactory(
-                new PropertyValueFactory<Student, String>("lastname")
+                new PropertyValueFactory<Student, String>("lastName")
         );
-        tableColumnStudentId.setCellValueFactory(
-                new PropertyValueFactory<Student, String>("studentID")
+        tableColumnEmail.setCellValueFactory(
+                new PropertyValueFactory<Student, String>("email")
+        );
+        tableColumnPhone.setCellValueFactory(
+            new PropertyValueFactory<Student, String>("phoneNo")
+        );
+        tableColumnCity.setCellValueFactory(
+                new PropertyValueFactory<Student, String>("city")
         );
 
-        comboboxStudents.setItems(students);
+
+        comboboxStudentsToCourse.setItems(students);
         comboBoxCourses.setItems(courses);
+        Teacher line = new Teacher(1,"Line", "Reinhardt");
+        Teacher ebbe = new Teacher(2,"Ebbe", "Vang");
 
-        courses.addAll(new Course("IDS"), new Course("SD"));
+        courses.addAll(new Course(1, line,"SD","E2019" ), new Course(2, line,"SD","F2020"), new Course(3,ebbe,"ES1","F2020"));
     }
 
-    public void AddStrudentToCourse(ActionEvent actionEvent) {
+    public void AddStudentToCourse(ActionEvent actionEvent) {
+
         System.out.println(comboBoxCourses.getSelectionModel().getSelectedItem());
         System.out.println(comboboxStudents.getSelectionModel().getSelectedItem());
+    }
+
+    public void AddGradeToStudent(ActionEvent actionEvent) {
+    }
+
+    public void searchQuery(ActionEvent actionEvent) {
     }
 }

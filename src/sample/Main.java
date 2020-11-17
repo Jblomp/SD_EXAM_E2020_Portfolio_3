@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Course, Student & Grades?");
         primaryStage.setScene(new Scene(root, 600, 475));
@@ -22,24 +22,32 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+
+
+        QueryWriter QW = new QueryWriter();
+
+        String url = "jdbc:sqlite:C:/Users/JesperBlom/Desktop/Train.db";
+        try {
+            QW.Connect(url);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (QW.conn != null) {
+                try {
+                    QW.CloseConnection();
+                } catch (SQLException d) {
+                    d.printStackTrace();
+                }
+            }
+        }
     }
-    QueryWriter QW =new QueryWriter();
-        try{
+}
 
-        String url="jdbc:sqlite:C:/Users/JesperBlom/Desktop/Train.db";
-        QW.Connect(url);
-        //SQL station select select statement
-//            Statement stmt=conn.createStatement();
-        QW.createStatement();
-        ResultSet rs=QW.StationQuerystmt();
 
-        //   rs=TDB.StationInputStatement();
-        rs=QW.sqlPlanPreparedStatement("Roskilde", "Odense", (float) 4.45);
-
-        //          System.out.println(" Type station name you want info for:");
-        //Statement stmt2=conn.createStatement();
-        //          Scanner scanner = new Scanner(System.in);
-        //         String Stationname=scanner.nextLine();
+//          System.out.println(" Type station name you want info for:");
+//Statement stmt2=conn.createStatement();
+//          Scanner scanner = new Scanner(System.in);
+//         String Stationname=scanner.nextLine();
 
           /*  sql="SELECT * FROM station WHERE Name='"+Stationname+"';";
             rs = stmt.executeQuery(sql);
@@ -51,19 +59,3 @@ public class Main extends Application {
                 System.out.println(name +" "+tracks);
                }
 */
-    }catch (
-    SQLException e)
-    {
-        e.printStackTrace();
-    }
-        finally {
-        if(QW.conn!=null)
-        {
-            try{
-                QW.CloseConnection();
-            }catch (SQLException d){
-                d.printStackTrace();
-            }
-        }
-    }
-}
