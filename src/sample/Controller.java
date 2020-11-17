@@ -6,6 +6,10 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Controller {
 
     public TableView tableStudents;
@@ -30,6 +34,8 @@ public class Controller {
     public TableColumn tableColumnPhone;
     public TableColumn tableColumnCity;
 
+    private QueryWriter queryWriter = new QueryWriter();
+
     ObservableList<Student> students = FXCollections.observableArrayList();
     ObservableList<Course> courses = FXCollections.observableArrayList();
 
@@ -43,7 +49,14 @@ public class Controller {
         Student student = new Student(studentId, textFieldFirstName.getText(), textFieldLastName.getText(), textFieldEmail.getText(), textFieldPhone.getText(), textFieldCity.getText());
         studentId += 27;
         students.add(student);
+        try {
+            queryWriter.Connect("jdbc:sqlite:/Users/magnus/Desktop/student.DB");
+            queryWriter.createStatement();
+            queryWriter.PreparedStatementInsertStudent(student);
 
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         System.out.println(students);
     }
 
@@ -81,6 +94,7 @@ public class Controller {
     }
 
     public void AddStudentToCourse(ActionEvent actionEvent) {
+
 
         System.out.println(comboBoxCourses.getSelectionModel().getSelectedItem());
         System.out.println(comboboxStudents.getSelectionModel().getSelectedItem());

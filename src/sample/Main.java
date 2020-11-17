@@ -26,9 +26,11 @@ public class Main extends Application {
 
         QueryWriter QW = new QueryWriter();
 
-        String url = "jdbc:sqlite:C:/Users/JesperBlom/Desktop/Train.db";
+        String url = "jdbc:sqlite:/Users/magnus/Desktop/student.DB"; //kig på
         try {
             QW.Connect(url);
+            QW.createStatement();
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
