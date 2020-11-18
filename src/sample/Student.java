@@ -14,11 +14,20 @@ public class Student {
     private StringProperty phoneNoDB;
     private StringProperty cityDB;
 
+    private StringProperty studentFullName;
+
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNo;
     private String city;
+
+
+
+
+    public Student(String name){
+        this.studentFullName = new SimpleStringProperty();
+    }
 
 
     public Student(String firstName, String lastName, String email, String phoneNo, String city){
@@ -28,6 +37,7 @@ public class Student {
         this.phoneNo = phoneNo;
         this.city = city;
     };
+
 
     public Student() {
         this.IDDB = new SimpleIntegerProperty();
@@ -149,7 +159,19 @@ public class Student {
     public void setCity(String city) {
         this.city = city;
     }
+    public String getStudentFullName() {
+        return studentFullName.get();
+    }
+
+    public StringProperty studentFullNameProperty() {
+        return studentFullName;
+    }
+
+    public void setStudentFullName(String studentFullName) {
+        this.studentFullName.set(studentFullName);
+    }
     @Override
+
     public String toString() {
         return firstName + " " + lastName;
     }

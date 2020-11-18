@@ -19,7 +19,7 @@
     <tabs>
         <Tab text="Add New Student">
             <content>
-                <GridPane>
+                <GridPane prefHeight="393.0" prefWidth="629.0">
                     <Label text="First Name">
                         <GridPane.margin>
                             <Insets left="40.0" />
@@ -28,48 +28,48 @@
                         <GridPane.margin>
                             <Insets left="40.0" />
                         </GridPane.margin></Label>
-                    <Label text="Phone" GridPane.rowIndex="2">
+                    <Label text="Phone" GridPane.columnIndex="2" GridPane.rowIndex="1">
                         <GridPane.margin>
                             <Insets left="40.0" />
                         </GridPane.margin></Label>
-                    <TextField fx:id="textFieldFirstName" GridPane.columnIndex="1">
-                        <GridPane.margin>
-                            <Insets left="20.0" />
-                        </GridPane.margin></TextField>
-                    <TextField fx:id="textFieldPhone" promptText="+45" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                        <GridPane.margin>
-                            <Insets left="20.0" />
-                        </GridPane.margin></TextField>
-                    <TextField fx:id="textFieldEmail" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                        <GridPane.margin>
-                            <Insets left="20.0" />
-                        </GridPane.margin></TextField>
-                    <Button fx:id="buttonAddNewStudent" onAction="#addStudent" text="Add New Student" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                     <Label layoutX="80.0" layoutY="45.0" text="Last Name" GridPane.columnIndex="2">
                         <GridPane.margin>
                             <Insets left="40.0" />
                         </GridPane.margin>
                     </Label>
-                    <Label layoutX="80.0" layoutY="45.0" text="City" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                    <Label layoutX="80.0" layoutY="45.0" text="City" GridPane.rowIndex="2">
                         <GridPane.margin>
                             <Insets left="40.0" />
                         </GridPane.margin>
                     </Label>
+                    <TextField fx:id="textFieldFirstName" GridPane.columnIndex="1">
+                        <GridPane.margin>
+                            <Insets left="20.0" />
+                        </GridPane.margin></TextField>
                     <TextField fx:id="textFieldLastName" GridPane.columnIndex="3">
                         <GridPane.margin>
                             <Insets left="20.0" />
                         </GridPane.margin>
                     </TextField>
-                    <TextField fx:id="textFieldCity" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                    <TextField fx:id="textFieldEmail" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <GridPane.margin>
+                            <Insets left="20.0" />
+                        </GridPane.margin></TextField>
+                    <TextField fx:id="textFieldPhone" promptText="+45" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                        <GridPane.margin>
+                            <Insets left="20.0" />
+                        </GridPane.margin></TextField>
+                    <TextField fx:id="textFieldCity" GridPane.columnIndex="1" GridPane.rowIndex="2">
                         <GridPane.margin>
                             <Insets left="20.0" />
                         </GridPane.margin>
                     </TextField>
+                    <Button fx:id="buttonAddNewStudent" onAction="#addStudent" prefHeight="27.0" prefWidth="160.0" text="Add New Student" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                     <columnConstraints>
-                        <ColumnConstraints />
-                        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints maxWidth="121.0" minWidth="102.0" prefWidth="109.0" />
+                        <ColumnConstraints maxWidth="146.0" minWidth="10.0" prefWidth="160.0" />
+                        <ColumnConstraints maxWidth="149.0" minWidth="10.0" prefWidth="106.0" />
+                        <ColumnConstraints maxWidth="215.0" minWidth="10.0" prefWidth="160.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints />
@@ -83,31 +83,21 @@
                 </GridPane>
             </content>
         </Tab>
-        <Tab text="List">
+        <Tab text="Student List">
             <content>
                 <BorderPane prefHeight="200.0" prefWidth="200.0">
                     <center>
-                        <TableView fx:id="tableStudents"  prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <TableView fx:id="tableStudents" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                             <columns>
-                                <TableColumn fx:id="tableColumnStudentId" prefWidth="75.0" text="ID" />
-                                <TableColumn fx:id="tableColumnFirstName" prefWidth="75.0" text="First Name" />
-                                <TableColumn fx:id="tableColumnLastName" prefWidth="75.0" text="Last Name" />
-                                <TableColumn fx:id="tableColumnEmail" prefWidth="75.0" text="Email" />
-                                <TableColumn fx:id="tableColumnPhone" prefWidth="75.0" text="Phone" />
-                                <TableColumn fx:id="tableColumnCity" prefWidth="75.0" text="City" />
+                                <TableColumn fx:id="tableColumnStudentId" prefWidth="50.0" text="ID" />
+                                <TableColumn fx:id="tableColumnFirstName" prefWidth="130.0" text="First Name" />
+                                <TableColumn fx:id="tableColumnLastName" prefWidth="130.0" text="Last Name" />
+                                <TableColumn fx:id="tableColumnEmail" prefWidth="130.0" text="Email" />
+                                <TableColumn fx:id="tableColumnPhone" prefWidth="130.0" text="Phone" />
+                                <TableColumn fx:id="tableColumnCity" prefWidth="130.0" text="City" />
                             </columns>
                         </TableView>
                     </center>
-                    <top>
-                        <ComboBox fx:id="comboBoxList" prefWidth="150.0" promptText="DropDown" BorderPane.alignment="TOP_LEFT">
-                            <opaqueInsets>
-                                <Insets />
-                            </opaqueInsets>
-                            <BorderPane.margin>
-                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                            </BorderPane.margin>
-                        </ComboBox>
-                    </top>
                 </BorderPane>
             </content>
         </Tab>
@@ -120,7 +110,7 @@
                                 <FlowPane.margin>
                                     <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
                                 </FlowPane.margin></Label>
-                            <ComboBox fx:id="comboboxStudentsToCourse">
+                            <ComboBox fx:id="comboboxStudentToCourse" minWidth="100.0">
                                 <FlowPane.margin>
                                     <Insets bottom="10.0" right="10.0" top="10.0" />
                                 </FlowPane.margin></ComboBox>
@@ -128,7 +118,7 @@
                                 <FlowPane.margin>
                                     <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
                                 </FlowPane.margin></Label>
-                            <ComboBox fx:id="comboBoxCourses">
+                            <ComboBox fx:id="comboBoxAssignCourse" minWidth="100.0">
                                 <FlowPane.margin>
                                     <Insets bottom="10.0" right="10.0" top="10.0" />
                                 </FlowPane.margin></ComboBox>
@@ -152,7 +142,17 @@
                                         <Insets bottom="10.0" left="10.0" top="10.0" />
                                     </FlowPane.margin>
                                 </Label>
-                                <ComboBox fx:id="comboboxGradeToStudents">
+                                <ComboBox fx:id="comboboxStudentsGrades" prefWidth="75.0">
+                                    <FlowPane.margin>
+                                        <Insets left="5.0" />
+                                    </FlowPane.margin>
+                                </ComboBox>
+                                <Label text="Choose Course">
+                                    <FlowPane.margin>
+                                        <Insets left="10.0" />
+                                    </FlowPane.margin>
+                                </Label>
+                                <ComboBox fx:id="comboboxCourseGrades" prefWidth="75.0">
                                     <FlowPane.margin>
                                         <Insets left="5.0" />
                                     </FlowPane.margin>
@@ -162,7 +162,7 @@
                                         <Insets bottom="10.0" left="10.0" top="10.0" />
                                     </FlowPane.margin>
                                 </Label>
-                                <ComboBox fx:id="comboBoxGrades">
+                                <ComboBox fx:id="comboBoxGradesToStudent" prefWidth="75.0">
                                     <FlowPane.margin>
                                         <Insets left="5.0" />
                                     </FlowPane.margin>
@@ -178,25 +178,101 @@
                 </BorderPane>
             </content>
         </Tab>
-        <Tab text="Search">
+        <Tab text="Info">
             <content>
                 <BorderPane prefHeight="200.0" prefWidth="200.0">
                     <top>
                         <FlowPane prefHeight="36.0" prefWidth="700.0" BorderPane.alignment="CENTER">
                             <children>
-                                <TextField fx:id="DataSearch" promptText="Skriv her">
-                                    <FlowPane.margin>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                    </FlowPane.margin>
-                                </TextField>
-                                <Button fx:id="buttonSearchQuery" mnemonicParsing="false" onAction="#searchQuery" text="Let's Go Bruv!">
-                                    <FlowPane.margin>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                    </FlowPane.margin>
-                                </Button>
+                                <GridPane prefHeight="93.0" prefWidth="702.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="268.0" minWidth="10.0" prefWidth="264.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="269.0" minWidth="10.0" prefWidth="194.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.0" minWidth="0.0" prefWidth="244.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <ComboBox fx:id="comboboxStudentsInfoTab1" prefWidth="100.0" GridPane.rowIndex="1">
+                                            <GridPane.margin>
+                                                <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+                                            </GridPane.margin>
+                                        </ComboBox>
+                                        <Button fx:id="buttonGetStudentCourses" mnemonicParsing="false" onAction="#getStudentCourses" text="Get Courses" GridPane.rowIndex="2">
+                                            <GridPane.margin>
+                                                <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+                                            </GridPane.margin>
+                                        </Button>
+                                        <ComboBox fx:id="comboboxStudentInfoTab2" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <GridPane.margin>
+                                                <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+                                            </GridPane.margin>
+                                        </ComboBox>
+                                        <Button fx:id="buttonGetAverageForStudent" mnemonicParsing="false" onAction="#getAverageForStudent" text="Get Average Grade" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                            <GridPane.margin>
+                                                <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+                                            </GridPane.margin>
+                                        </Button>
+                                        <ComboBox fx:id="comboboxCourseInfoTab" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                            <GridPane.margin>
+                                                <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+                                            </GridPane.margin>
+                                        </ComboBox>
+                                        <Button fx:id="buttonGetAverageForCourse" mnemonicParsing="false" onAction="#getAverageForCourse" text="Get Average Grade" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                            <GridPane.margin>
+                                                <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+                                            </GridPane.margin>
+                                        </Button>
+                                        <Label text="Select student">
+                                            <GridPane.margin>
+                                                <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+                                            </GridPane.margin>
+                                        </Label>
+                                        <Label text="Select student" GridPane.columnIndex="1">
+                                            <GridPane.margin>
+                                                <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+                                            </GridPane.margin>
+                                        </Label>
+                                        <Label text="Select course" GridPane.columnIndex="2">
+                                            <GridPane.margin>
+                                                <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+                                            </GridPane.margin>
+                                        </Label>
+                                    </children>
+                                </GridPane>
                             </children>
                         </FlowPane>
                     </top>
+                    <left>
+                        <TableView fx:id="tableStudentAllCourses" prefHeight="395.0" prefWidth="263.0" BorderPane.alignment="CENTER">
+                            <columns>
+                                <TableColumn fx:id="tableColumnStudentName" prefWidth="71.0" text="Student" />
+                                <TableColumn fx:id="tableColumnStudentCourse" prefWidth="71.0" text="Course" />
+                                <TableColumn fx:id="tableColumnStudentTeacher" prefWidth="71.0" text="Teacher" />
+                                <TableColumn fx:id="tableColumnStudentGrade" prefWidth="50.0" text="Grade" />
+                            </columns>
+                        </TableView>
+                    </left>
+                    <center>
+                        <TableView fx:id="tableStudentAverageGrade" prefHeight="395.0" prefWidth="219.0" BorderPane.alignment="CENTER">
+                            <columns>
+                                <TableColumn fx:id="tableColumnStudentNameAverage" prefWidth="96.0" text="Student" />
+                                <TableColumn fx:id="tableColumnStudentAverageGrade" prefWidth="96.0" text="Average" />
+                            </columns>
+                        </TableView>
+                    </center>
+                    <right>
+                        <TableView fx:id="tableCourseAverageGrade" prefHeight="395.0" prefWidth="246.0" BorderPane.alignment="CENTER">
+                            <columns>
+                                <TableColumn fx:id="tableColumnCourseFullName" prefWidth="91.0" text="Course" />
+                                <TableColumn fx:id="tableColumnCourseTeacherFullNameInfo" prefWidth="91.0" text="Teacher" />
+                                <TableColumn fx:id="tableColumnCourseAverageGrade" prefWidth="60.0" text="Average" />
+                            </columns>
+                        </TableView>
+                    </right>
                 </BorderPane>
             </content>
         </Tab>

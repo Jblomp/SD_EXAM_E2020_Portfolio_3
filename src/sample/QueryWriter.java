@@ -55,6 +55,25 @@ public class QueryWriter {
 
 
     }
+    public void PreparedStatementInsertGrades(String student, String Course) throws SQLException {
+        PreparedStatement pInputStatement = conn.prepareStatement(
+                "INSERT INTO GRADES SELECT NULL, STUDENTS.ID, COURSES.ID, COURSES.TEACHER_ID, NULL FROM STUDENTS, COURSES " +
+                        "WHERE STUDENTS.FIRST_NAME ||' '|| STUDENTS.LAST_NAME = '"+student+"' " +
+                        "AND COURSES.NAME ||' '|| TIME_OF_YEAR = '"+Course+"';");
+
+        pInputStatement.executeUpdate();
+
+
+    }
+
+    public void PreparedStatementUpdateGrades(int studentID, int courseID, int grade) throws SQLException {
+        PreparedStatement pInputStatement = conn.prepareStatement("UPDATE GRADES SET GRADE = '"+grade+"' WHERE STUDENT_ID = '"+studentID+"' AND COURSE_ID = '"+courseID+"' AND GRADE IS NULL;");
+
+        pInputStatement.executeUpdate();
+
+
+    }
+
     public void PreparedStatementAddStudentToCourse(Student student) throws SQLException {
 
 
