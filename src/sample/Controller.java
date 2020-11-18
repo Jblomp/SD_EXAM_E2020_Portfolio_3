@@ -11,16 +11,17 @@ import java.sql.*;
 import java.util.Set;
 
 public class Controller {
+    //observablelists ues for comboboxes and tableviews
     private ObservableList<Student> studentList;
+    private ObservableList<Grades> studentAllCourses;
+    private ObservableList<GradeAvg> studentAvgGrade;
+    private ObservableList<Course> courseAvgGrade;
     private ObservableList studentsForComboBox;
     private ObservableList coursesForComboBox;
     private ObservableList studentsForGradesComboBox;
     private ObservableList coursesForGradesComboBox;
-    private ObservableList<Grades> studentAllCourses;
-    private ObservableList<GradeAvg> studentAvgGrade;
-    private ObservableList<Course> courseAvgGrade;
-
     private ObservableList gradesForCombox;
+
     //studentList tab variables in GUI
     public TableView tableStudents;
     public TableColumn<Student, String> tableColumnFirstName;
@@ -35,14 +36,6 @@ public class Controller {
     public TextField textFieldPhone;
     public TextField textFieldCity;
     public Button buttonAddNewStudent;
-
-    //gradesList tab variables in GUI
-    public TableView tableGrades;
-    public TableColumn tableColumnGradesId;
-    public TableColumn tableColumnStudentFullName;
-    public TableColumn tableColumnTeacherFullName;
-    public TableColumn tableColumnCourse;
-    public TableColumn tableColumnGrade;
 
     //Info variables in GUI
     public TableView tableStudentAllCourses;
@@ -84,7 +77,6 @@ public class Controller {
 
 
     public void initialize() throws SQLException, ClassNotFoundException {
-
         studentList = FXCollections.observableArrayList();
         studentsForComboBox = FXCollections.observableArrayList();
         coursesForComboBox = FXCollections.observableArrayList();
@@ -95,6 +87,7 @@ public class Controller {
         studentAvgGrade = FXCollections.observableArrayList();
         courseAvgGrade = FXCollections.observableArrayList();
 
+        //Tableview Columns for tableCourseAverageGrade which displays all courses a student is added 2
         tableColumnStudentName.setCellValueFactory(
                 new PropertyValueFactory<Student, String>("STUDENTDB")
         );
@@ -109,7 +102,7 @@ public class Controller {
         );
 
 
-
+        //Tableview Columns for tableStudentAverageGrade which displays avg grade for a student
         tableColumnStudentNameAverage.setCellValueFactory(
                 new PropertyValueFactory<Student, String>("STUDENTDB")
         );
@@ -117,7 +110,7 @@ public class Controller {
                 new PropertyValueFactory<Student, String>("AVGGRADEDB")
         );
 
-
+        //Tableview Columns for tableStudentAverageGrade which displays avg grade for a course
         tableColumnCourseFullName.setCellValueFactory(
                 new PropertyValueFactory<Student, String>("COURSEDB")
         );
@@ -128,6 +121,8 @@ public class Controller {
                 new PropertyValueFactory<Student, String>("AVGGRADEDB")
         );
 
+
+        //Tableview Columns for tableStudents which display all students
         tableColumnStudentId.setCellValueFactory(
                 new PropertyValueFactory<Student, String>("IDDB")
         );
@@ -146,14 +141,40 @@ public class Controller {
         tableColumnCity.setCellValueFactory(
                 new PropertyValueFactory<Student, String>("cityDB")
         );
+
+        //populate comboboxes and tableviews when GUI starts
         comboBoxGradesToStudent.setItems(gradesForCombox);
         gradesForCombox.addAll(-3, 0,2,4,7,10,12);
-        populateTableStudents();
         populateComboBoxStudents();
         populateComboBoxCourses();
         populateComboBoxGradesToStudentStudent();
         populateComboBoxGradesToStudentCourse();
+        populateTableStudents();
 
+    }
+
+    private void populateTableStudents() throws SQLException {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(dataBaseURL);
+            ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM STUDENTS");
+            while (rs.next()) {
+                Student student = new Student();
+                student.setIDDB(rs.getInt("ID"));
+                student.setFirstNameDB(rs.getString("FIRST_NAME"));
+                student.setLastNameDB(rs.getString("LAST_NAME"));
+                student.setEmailDB(rs.getString("EMAIL"));
+                student.setPhoneNoDB(rs.getString("PHONE"));
+                student.setCityDB(rs.getString("CITY"));
+                //add student 'line' from STUDENTS to an observablelist
+                studentList.add(student);
+            }
+            //set tableview = the observablelist
+            tableStudents.setItems(studentList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     private void populateTableStudentAllCourses(String student) throws SQLException {
@@ -176,6 +197,7 @@ public class Controller {
             throw e;
         }
     }
+
     private void populateTableStudentAvgGrade(String student) throws SQLException {
         studentAvgGrade.clear();
         Connection conn = null;
@@ -209,29 +231,6 @@ public class Controller {
                 courseAvgGrade.add(courseobj);
             }
             tableCourseAverageGrade.setItems(courseAvgGrade);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw e;
-        }
-    }
-
-
-    private void populateTableStudents() throws SQLException {
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(dataBaseURL);
-            ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM STUDENTS");
-            while (rs.next()) {
-                Student student = new Student();
-                student.setIDDB(rs.getInt("ID"));
-                student.setFirstNameDB(rs.getString("FIRST_NAME"));
-                student.setLastNameDB(rs.getString("LAST_NAME"));
-                student.setEmailDB(rs.getString("EMAIL"));
-                student.setPhoneNoDB(rs.getString("PHONE"));
-                student.setCityDB(rs.getString("CITY"));
-                studentList.add(student);
-            }
-            tableStudents.setItems(studentList);
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
@@ -334,8 +333,6 @@ public class Controller {
     }
 
     public void AddGradeToStudent(ActionEvent actionEvent) throws SQLException {
-
-
         int studentID = 0;
         int courseID = 0;
         Connection conn = null;
@@ -363,12 +360,9 @@ public class Controller {
             queryWriter.Connect(dataBaseURL);
             queryWriter.createStatement();
             queryWriter.PreparedStatementUpdateGrades(studentID, courseID, (int) comboBoxGradesToStudent.getSelectionModel().getSelectedItem());
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-
     }
 
     public void getStudentCourses(ActionEvent actionEvent) throws SQLException {
